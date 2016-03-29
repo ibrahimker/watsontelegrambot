@@ -3,8 +3,8 @@ applications:
   memory: 256M
   instances: 1
   domain: mybluemix.net
-  name: <yourname>-bot
-  host: <yourname>-bot
+  name: NjemakBot-bot
+  host: NjemakBot-bot
   disk_quota: 1024M
   env:
     NODE_ENV: production

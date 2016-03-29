@@ -1,12 +1,12 @@
 {
-  "name": "<yourname>-bot",
+  "name": "NjemakBot-bot",
   "description": "Bluemix telegram bot template",
   "version": "1.0.0",
-  "author": "dieter@wimpi.net",
+  "author": "ibrahim.nurandita@gmail.com",
   "contributors": [
     {
-      "name": "Dieter Wimberger",
-      "email": "dieter@wimpi.net"
+      "name": "Ibrahim Nurandita Isbandiputra",
+      "email": "ibrahim.nurandita@gmail.com"
     }
   ],
   "scripts": {

@@ -1,4 +1,5 @@
 var debug = require('debug')('app');
+var request = require('request');
 
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
@@ -10,11 +11,11 @@ var BOT_TOKEN;
 
 if (appEnv.isLocal) {
   //put your development BOT Token
-  BOT_TOKEN = '';
+  BOT_TOKEN = '187747124:AAEzx09ZjxubNsyhJfccZOM4NzTjxgvWqcE';
   debug('Local run');
 } else {
   //Put your production BOT Token
-  BOT_TOKEN = '';
+  BOT_TOKEN = '187747124:AAEzx09ZjxubNsyhJfccZOM4NzTjxgvWqcE';
   debug('Container run');
 }
 
@@ -74,4 +75,28 @@ bot.onText(/\/e (.+)/, function(msg, match) {
   var fromId = msg.from.id;
   var resp = match[1];
   bot.sendMessage(fromId, resp);
+});
+
+// Matches /dimanaludik
+bot.onText(/\/dimanaludik/, function(msg) {
+  var fromId = msg.from.id;
+  bot.sendMessage(fromId, 'Masih di jalan gw');
+});
+
+//Match /tone [whatever]
+bot.onText(/\/tone (.+)/, function(msg, match) {
+  var fromId = msg.from.id;
+  var resp = match[1];
+  var respToURI = encodeURIComponent(match[1]);
+  request('https://watson-api-explorer.mybluemix.net/tone-analyzer-beta/api/v3/tone?version=2016-02-11&text='+respToURI, function (error, response, body) {
+  if (!error && response.statusCode == 200) {
+    var hehe = JSON.parse(body);
+    var anger = hehe.document_tone.tone_categories[0].tones[0].score;
+    var disgust = hehe.document_tone.tone_categories[0].tones[1].score;
+    var fear = hehe.document_tone.tone_categories[0].tones[2].score;
+    var joy = hehe.document_tone.tone_categories[0].tones[3].score;
+    var sadness = hehe.document_tone.tone_categories[0].tones[4].score;
+    bot.sendMessage(fromId, 'Anger : '+ anger + '\n' +'Disgust: ' + disgust + '\n'+'Fear: ' + fear + '\n'+'Joy: ' + joy + '\n' + 'Sadness: ' + sadness);
+  }
+})
 });
